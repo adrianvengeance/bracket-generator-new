@@ -42,12 +42,23 @@ db.connect((err) => {
   // -------------- delete contest
   app.post("/delete", (req, res) => {
     const idContest = req.body.id;
+    const checkContestDetail = `SELECT COUNT(*) AS count FROM contests_detail WHERE id_contests = ${idContest} AND deleted_at IS NULL`;
 
-    const deleteContest = `UPDATE contests c, contests_detail cd SET c.deleted_at = NOW(), cd.deleted_at = NOW() WHERE c.id = ${idContest} AND cd.id_contests = ${idContest}`;
-
-    db.query(deleteContest, (err, result) => {
+    db.query(checkContestDetail, (err, result) => {
       if (err) throw err;
-      res.redirect("/");
+      const contestDetail = JSON.parse(JSON.stringify(result));
+      const exist = contestDetail[0].count > 0;
+
+      if (exist) {
+        db.query(`UPDATE contests_detail SET deleted_at = NOW() WHERE id_contests = ${idContest}`, (err, result) => {
+          if (err) throw err;
+        });
+      }
+
+      db.query(`UPDATE contests SET deleted_at = NOW() WHERE id = ${idContest}`, (err, result) => {
+        if (err) throw err;
+        res.redirect("/");
+      });
     });
   });
 
