@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bracket</title>
+    <link rel="stylesheet" href="src/bootstrap-5.2.3-dist/css/bootstrap.min.css" />
+    <script src="src/jquery/jquery-3.6.0.js"></script>
+    <script src="src/jquery/jquery-ui.js"></script>
+    <style>
+      a.text-dark {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-xl mt-2">
+      <div class="row">
+        <div class="text-center">
+          <a class="text-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <!-- <h4 class="fw-bold">Bracket Generator</h4> -->
+            <h4 class="fw-bold">Bagan Pertandingan<br />Garuda Indonesia<br />Taekwondo Championship 2023</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container allBagan" style="font-family: Inter, Helvetica, sans-serif"></div>
+
+    <!-- modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Bracket Generator</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-2">
+              <label class="col-4 col-form-label">Title</label>
+              <div class="col-8">
+                <input type="text" class="form-control form-control-sm" id="title" placeholder="Senior U-54 kg Putra - Pemula" autofocus />
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label class="col-4 col-form-label">Participants</label>
+              <div class="col-8">
+                <textarea id="athletes" rows="8" class="form-control form-control-sm" placeholder="Satu perbaris"></textarea>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="offset-4 col-8">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="shuffle" id="flexCheckChecked" />
+                  <label class="form-check-label" for="flexCheckChecked"> Randomize participants </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <input type="button" class="btn btn-primary col-6 offset-3 text-center" value="Create" id="create" class="btn-close" data-bs-dismiss="modal" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal -->
+
+    <script src="src/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/svg.js/svg.min.js"></script>
+    <script src="/generator.js"></script>
+  </body>
+</html>
