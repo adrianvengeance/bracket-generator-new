@@ -9,6 +9,8 @@ app.use(BodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+app.use(express.static(__dirname + "/src"));
+
 const db = mysql.createConnection({
   host: "localhost",
   database: "bracket_generator",
@@ -63,9 +65,25 @@ db.connect((err) => {
   });
 
   // -------------- contest page
-  app.get("/:contest", (req, res) => {
-    const getContest = `SELECT * FROM contests_detail WHERE id_contests = ${req.params.contest}`;
-    res.render("not-found");
+  app.get("/detail/:reqid", (req, res) => {
+    const id = req.params.reqid;
+    const getContest = `SELECT * FROM contests WHERE id = ${id} AND deleted_at IS NULL`;
+
+    db.query(getContest, (err, result) => {
+      if (err) throw err;
+      const contest = JSON.parse(JSON.stringify(result));
+      const getContestDetail = `SELECT * FROM contests_detail WHERE id_contests = ${id} AND deleted_at IS NULL`;
+
+      db.query(getContestDetail, (err, result) => {
+        if (err) throw err;
+        const contestDetail = JSON.parse(JSON.stringify(result));
+        const notExist = contestDetail == "";
+        let contsDetail = notExist ? "" : contestDetail[0];
+
+        res.render("bracket", { contest: contest, contestDetail: contsDetail });
+      });
+    });
+    // res.render("not-found");
   });
 });
 
